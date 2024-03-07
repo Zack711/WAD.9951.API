@@ -16,15 +16,15 @@ namespace WAD._9951.DAL
 {
 	public static class DALConfigureServices
 	{
-		public static IServiceCollection DALConfigureServices(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection DalConfigureServices(this IServiceCollection services, IConfiguration configuration)
 		{
 			// Adding connection string to sql
 			services.AddDbContext<FitnessAppDbContext>(options =>
 				options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
 			// Depedency injection 
-			services.AddScoped<IRepository<User>, UserRepository>();
-			services.AddScoped<IRepository<FitnessActivity>, FitnessActivityRepository>();
+			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IFitnessActivityRepository, FitnessActivityRepository>();
 
 			// Adding profile
 			services.AddAutoMapper(Assembly.GetExecutingAssembly());

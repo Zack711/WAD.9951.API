@@ -10,7 +10,7 @@ internal class Program
 
 
 		// Adding DAL layer configuration 
-		builder.Services.DALConfigureServices(builder.Configuration);
+		builder.Services.DalConfigureServices(builder.Configuration);
 
 		builder.Services.AddControllers();
 		// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

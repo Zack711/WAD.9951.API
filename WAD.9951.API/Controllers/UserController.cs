@@ -1,19 +1,20 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WAD._9951.DAL.Dtos;
+using WAD._9951.DAL.Interfaces;
 using WAD._9951.DAL.Models;
 using WAD._9951.DAL.Repositories;
 
 namespace WAD._9951.API.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class UserController : ControllerBase
 	{
-		private readonly UserRepository _userRepository;
+		private readonly IUserRepository _userRepository;
 		private readonly IMapper _mapper;
 
-		public UserController(UserRepository userRepository, IMapper mapper)
+		public UserController(IUserRepository userRepository, IMapper mapper)
 		{
 			_userRepository = userRepository;
 			_mapper = mapper;

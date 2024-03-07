@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WAD._9951.DAL.Models;
 
 namespace WAD._9951.DAL.Interfaces
 {
-	public interface IRepository<T>
+	public interface IFitnessActivityRepository : IRepository<FitnessActivity>
 	{
-		List<T> GetAll();
-		T GetById(int id);
-		void Add(T entity);
-		void Update(int id, T entity);
-		void Delete(int id);
 	}
-
 }

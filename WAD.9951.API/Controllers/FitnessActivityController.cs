@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WAD._9951.DAL.Dtos;
+using WAD._9951.DAL.Interfaces;
 using WAD._9951.DAL.Models;
 using WAD._9951.DAL.Repositories;
 
@@ -10,10 +11,10 @@ namespace WAD._9951.API.Controllers
 	[ApiController]
 	public class FitnessActivityController : ControllerBase
 	{
-		private readonly FitnessActivityRepository _activityRepository;
+		private readonly IFitnessActivityRepository _activityRepository;
 		private readonly IMapper _mapper;
 
-		public FitnessActivityController(FitnessActivityRepository activityRepository, IMapper mapper)
+		public FitnessActivityController(IFitnessActivityRepository activityRepository, IMapper mapper)
 		{
 			_activityRepository = activityRepository;
 			_mapper = mapper;

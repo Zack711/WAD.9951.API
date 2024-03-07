@@ -10,7 +10,7 @@ using WAD._9951.DAL.Models;
 
 namespace WAD._9951.DAL.Repositories
 {
-	public class UserRepository : IRepository<User>
+	public class UserRepository : IUserRepository
 	{
 		private readonly FitnessAppDbContext _dbContext;
 
@@ -35,10 +35,14 @@ namespace WAD._9951.DAL.Repositories
 			_dbContext.SaveChanges();
 		}
 
-		public void Update(User entity)
+		public void Update(int id, User entity)
 		{
-			_dbContext.Users.Update(entity);
-			_dbContext.SaveChanges();
+			var existingUser = _dbContext.Users.FindAsync(id);
+			if (existingUser != null)
+			{
+				_dbContext.Entry(existingUser).CurrentValues.SetValues(entity);
+				_dbContext.SaveChangesAsync();
+			}
 		}
 
 		public void Delete(int id)
