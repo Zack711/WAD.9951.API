@@ -12,5 +12,6 @@ namespace WAD._9951.DAL.Models
 		public string Username { get; set; }
 		public string Email { get; set; }
 		public DateTime RegistrationDate { get; set; }
+		public ICollection<FitnessActivity> FitnessActivities { get; set; }
 	}
 }
