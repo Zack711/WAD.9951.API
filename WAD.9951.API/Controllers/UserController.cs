@@ -7,7 +7,7 @@ using WAD._9951.DAL.Repositories;
 
 namespace WAD._9951.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class UserController : ControllerBase
 	{
@@ -21,17 +21,17 @@ namespace WAD._9951.API.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<List<UserDto>> GetAllUsers()
+		public async Task<ActionResult<List<UserDto>>> GetAllUsers()
 		{
-			var users = _userRepository.GetAll();
+			var users = await _userRepository.GetAll();
 			var userDtos = _mapper.Map<List<UserDto>>(users);
 			return Ok(userDtos);
 		}
 
 		[HttpGet("{id}")]
-		public ActionResult<UserDto> GetUserById(int id)
+		public async Task<ActionResult<UserDto>> GetUserById(int id)
 		{
-			var user = _userRepository.GetById(id);
+			var user = await _userRepository.GetById(id);
 			if (user == null)
 			{
 				return NotFound();
@@ -41,44 +41,44 @@ namespace WAD._9951.API.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult<UserDto> CreateUser(UserDto userDto)
+		public async Task<ActionResult<UserDto>> CreateUser(UserDto userDto)
 		{
 			var user = _mapper.Map<User>(userDto);
-			_userRepository.Add(user);
+			await _userRepository.Add(user);
 			userDto.Id = user.Id; // Update the DTO with the newly generated ID
 			return Ok(userDto);
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult UpdateUser(int id, UserDto userDto)
+		public async Task<IActionResult> UpdateUser(int id, UserDto userDto)
 		{
 			if (id != userDto.Id)
 			{
 				return BadRequest();
 			}
 
-			var existingUser = _userRepository.GetById(id);
+			var existingUser = await _userRepository.GetById(id);
 			if (existingUser == null)
 			{
 				return NotFound();
 			}
 
 			var user = _mapper.Map<User>(userDto);
-			_userRepository.Update(user);
+			await _userRepository.Update(id, user);
 
 			return Ok("Updated");
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult DeleteUser(int id)
+		public async Task<IActionResult> DeleteUser(int id)
 		{
-			var user = _userRepository.GetById(id);
+			var user = await _userRepository.GetById(id);
 			if (user == null)
 			{
 				return NotFound();
 			}
 
-			_userRepository.Delete(id);
+			await _userRepository.Delete(id);
 			return Ok("Deleted");
 		}
 	}

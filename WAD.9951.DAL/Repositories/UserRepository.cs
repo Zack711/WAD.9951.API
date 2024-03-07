@@ -19,39 +19,39 @@ namespace WAD._9951.DAL.Repositories
 			_dbContext = dbContext;
 		}
 
-		public List<User> GetAll()
+		public async Task<List<User>> GetAll()
 		{
-			return _dbContext.Users.ToList();
+			return await _dbContext.Users.ToListAsync();
 		}
 
-		public User GetById(int id)
+		public async Task<User> GetById(int id)
 		{
-			return _dbContext.Users.FirstOrDefault(u => u.Id == id);
+			return await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
 		}
 
-		public void Add(User entity)
+		public async Task Add(User entity)
 		{
 			_dbContext.Users.Add(entity);
-			_dbContext.SaveChanges();
+			await _dbContext.SaveChangesAsync();
 		}
 
-		public void Update(int id, User entity)
+		public async Task Update(int id, User entity)
 		{
 			var existingUser = _dbContext.Users.FindAsync(id);
 			if (existingUser != null)
 			{
 				_dbContext.Entry(existingUser).CurrentValues.SetValues(entity);
-				_dbContext.SaveChangesAsync();
+				await _dbContext.SaveChangesAsync();
 			}
 		}
 
-		public void Delete(int id)
+		public async Task Delete(int id)
 		{
-			var user = GetById(id);
+			var user = await GetById(id);
 			if (user != null)
 			{
 				_dbContext.Users.Remove(user);
-				_dbContext.SaveChanges();
+				await _dbContext.SaveChangesAsync();
 			}
 		}
 	}

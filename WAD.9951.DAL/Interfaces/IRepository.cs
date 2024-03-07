@@ -8,11 +8,10 @@ namespace WAD._9951.DAL.Interfaces
 {
 	public interface IRepository<T>
 	{
-		List<T> GetAll();
-		T GetById(int id);
-		void Add(T entity);
-		void Update(int id, T entity);
-		void Delete(int id);
+		Task<List<T>> GetAll();
+		Task<T> GetById(int id);
+		Task Add(T entity);
+		Task Update(int id, T entity);
+		Task Delete(int id);
 	}
-
 }

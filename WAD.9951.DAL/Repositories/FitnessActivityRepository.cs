@@ -19,39 +19,39 @@ namespace WAD._9951.DAL.Repositories
 			_dbContext = dbContext;
 		}
 
-		public List<FitnessActivity> GetAll()
+		public async Task<List<FitnessActivity>> GetAll()
 		{
-			return _dbContext.FitnessActivities.ToList();
+			return await _dbContext.FitnessActivities.ToListAsync();
 		}
 
-		public FitnessActivity GetById(int id)
+		public async Task<FitnessActivity> GetById(int id)
 		{
-			return _dbContext.FitnessActivities.FirstOrDefault(a => a.Id == id);
+			return await _dbContext.FitnessActivities.FirstOrDefaultAsync(a => a.Id == id);
 		}
 
-		public void Add(FitnessActivity entity)
+		public async Task Add(FitnessActivity entity)
 		{
 			_dbContext.FitnessActivities.Add(entity);
-			_dbContext.SaveChanges();
+			await _dbContext.SaveChangesAsync();
 		}
 
-		public void Update(int id, FitnessActivity entity)
+		public async Task Update(int id, FitnessActivity entity)
 		{
 			var existingEntry = _dbContext.FitnessActivities.FindAsync(id);
 			if (existingEntry != null)
 			{
 				_dbContext.Entry(existingEntry).CurrentValues.SetValues(entity);
-				_dbContext.SaveChangesAsync();
+				await _dbContext.SaveChangesAsync();
 			}
 		}
 
-		public void Delete(int id)
+		public async Task Delete(int id)
 		{
-			var activity = GetById(id);
+			var activity = await GetById(id);
 			if (activity != null)
 			{
 				_dbContext.FitnessActivities.Remove(activity);
-				_dbContext.SaveChanges();
+				await _dbContext.SaveChangesAsync();
 			}
 		}
 	}
