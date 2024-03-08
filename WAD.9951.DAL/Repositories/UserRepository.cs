@@ -37,10 +37,12 @@ namespace WAD._9951.DAL.Repositories
 
 		public async Task Update(int id, User entity)
 		{
-			var existingUser = _dbContext.Users.FindAsync(id);
+			var existingUser = await _dbContext.Users.FindAsync(id);
 			if (existingUser != null)
 			{
-				_dbContext.Entry(existingUser).CurrentValues.SetValues(entity);
+				existingUser.Username = entity.Username;
+				existingUser.Email = entity.Email;
+				existingUser.RegistrationDate = entity.RegistrationDate;
 				await _dbContext.SaveChangesAsync();
 			}
 		}

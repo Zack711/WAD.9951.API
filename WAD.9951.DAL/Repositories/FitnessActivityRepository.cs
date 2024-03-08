@@ -31,16 +31,29 @@ namespace WAD._9951.DAL.Repositories
 
 		public async Task Add(FitnessActivity entity)
 		{
+			var user = await _dbContext.Users.FindAsync(entity.UserId);
+			if (user == null)
+			{
+				// If the user with the specified ID does not exist, handle the error accordingly
+				throw new InvalidOperationException($"User with ID {entity.UserId} does not exist.");
+			}
+
+			// Associate the user entity with the fitness activity
+			entity.User = user;
+
 			_dbContext.FitnessActivities.Add(entity);
 			await _dbContext.SaveChangesAsync();
 		}
 
 		public async Task Update(int id, FitnessActivity entity)
 		{
-			var existingEntry = _dbContext.FitnessActivities.FindAsync(id);
-			if (existingEntry != null)
+			var existingUser = await _dbContext.FitnessActivities.FindAsync(id);
+			if (existingUser != null)
 			{
-				_dbContext.Entry(existingEntry).CurrentValues.SetValues(entity);
+				existingUser.UserId = entity.UserId;
+				existingUser.DurationInMinutes = entity.DurationInMinutes;
+				existingUser.ActivityType = entity.ActivityType;
+				existingUser.Date = entity.Date;
 				await _dbContext.SaveChangesAsync();
 			}
 		}

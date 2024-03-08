@@ -45,18 +45,12 @@ namespace WAD._9951.API.Controllers
 		{
 			var user = _mapper.Map<User>(userDto);
 			await _userRepository.Add(user);
-			userDto.Id = user.Id; // Update the DTO with the newly generated ID
 			return Ok(userDto);
 		}
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateUser(int id, UserDto userDto)
 		{
-			if (id != userDto.Id)
-			{
-				return BadRequest();
-			}
-
 			var existingUser = await _userRepository.GetById(id);
 			if (existingUser == null)
 			{
@@ -66,7 +60,7 @@ namespace WAD._9951.API.Controllers
 			var user = _mapper.Map<User>(userDto);
 			await _userRepository.Update(id, user);
 
-			return Ok("Updated");
+			return Ok("Updated" + userDto.Id);
 		}
 
 		[HttpDelete("{id}")]
@@ -79,7 +73,7 @@ namespace WAD._9951.API.Controllers
 			}
 
 			await _userRepository.Delete(id);
-			return Ok("Deleted");
+			return Ok("Deleted" + user.Id);
 		}
 	}
 }

@@ -45,18 +45,12 @@ namespace WAD._9951.API.Controllers
 		{
 			var activity = _mapper.Map<FitnessActivity>(activityDto);
 			await _activityRepository.Add(activity);
-			activityDto.Id = activity.Id; // Update the DTO with the newly generated ID
 			return Ok(activityDto);
 		}
 
 		[HttpPut("{id}")]
 		public async Task <IActionResult> UpdateActivity(int id, FitnessActivityDto activityDto)
 		{
-			if (id != activityDto.Id)
-			{
-				return BadRequest();
-			}
-
 			var existingActivity = await _activityRepository.GetById(id);
 			if (existingActivity == null)
 			{
@@ -66,7 +60,7 @@ namespace WAD._9951.API.Controllers
 			var activity = _mapper.Map<FitnessActivity>(activityDto);
 			await _activityRepository.Update(id, activity);
 
-			return Ok("Updated");
+			return Ok("Updated" + activityDto.Id);
 		}
 
 		[HttpDelete("{id}")]
@@ -79,7 +73,7 @@ namespace WAD._9951.API.Controllers
 			}
 
 			await _activityRepository.Delete(id);
-			return Ok("Deleted");
+			return Ok("Deleted" + activity.Id);
 		}
 	}
 }
